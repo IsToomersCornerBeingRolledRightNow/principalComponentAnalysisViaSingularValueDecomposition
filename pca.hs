@@ -1,11 +1,63 @@
 import Numeric.LinearAlgebra.HMatrix
 import Data.Packed.Matrix
 import Data.Packed.Vector
-import Data.List (transpose)
 
 data Hyperplane = Hyperplane Int (Vector Double) (Matrix Double) deriving (Show)
-  -- Vector Double should be the mean
+  -- first argument is the dimension of the ambient space
+  -- second argument is a vector in the hyperplane
+  -- rows of third argument is the basis of the parallel linear subspace
+
+mean :: Matrix Double -> [Double]
+-- returns the average of the rows of a matrix
+mean x = fmap (/n) s
+  where 
+  vs = toLists . trans $ x
+  s = fmap sum vs
+  n = fromIntegral . rows $ x
+
+normalize :: Matrix Double -> Matrix Double
+-- subtracts the average of/from the rows of a matrix
+normalize x = x - (fromLists . take n $ repeat m)
+  where
+  m = mean x
+  n = fromIntegral . rows $ x
+
+makePlane :: Matrix Double -> Double -> Hyperplane
+-- finds the best-fit hyperplane of the rows of a matrix
+-- first argument is your data, rows are individual datapoints
+-- second argument is the threshold SVD we want
+makePlane inmat cutoff = Hyperplane n m rows
+  where
+  n = cols inmat
+  m = fromList . mean $ inmat
+  normalizedmat = normalize inmat
+  (_,rows) = trimSVDRight cutoff normalizedmat
+
+trimSVDRight :: Double -> Matrix Double -> (Vector Double, Matrix Double)
+-- returns part of the diagonal and right-side factor from SVD of a matrix
+-- first argument is the minimum required to return a sigular value
+-- second argument is the matrix
+trimSVDRight min inmat = (v, outmat)
+  where
+  (v1,m1) = rightSV inmat
+  v = fromList . takeWhile (>= min) . toList $ v1
+  outmat = trans $ takeColumns (dim v) m1
+
+distance2 :: Vector Double -> Hyperplane -> Double
+-- finds the square of the distance from a vector to a hyperplane
+distance2 v (Hyperplane n hv m) = norm_2 $ distancemat #> v'
+  where
+  v' = v - hv
+  distancemat = (trans m) * m - (ident n)
   
+
+
+
+
+
+
+
+-- EXAMPLE DATA  
 ex1 :: Matrix Double
 ex1 =
   (4><2)
@@ -26,43 +78,5 @@ ex3_h = Hyperplane 3 (fromList [1,1,0]) (fromLists [[1,0,0]])
 
 ex3_v :: Vector Double
 ex3_v = fromList [1,2,3]
+-- END EXAMPLE DATA
 
-
-mean :: Matrix Double -> [Double]
-mean x = fmap (/n) s
-  where 
-  vs = toLists x
-  s = fmap sum . transpose $ vs
-  n = fromIntegral $ rows x
-
-normalize :: Matrix Double -> Matrix Double
-normalize x = x - (fromLists . take n $ repeat m)
-  where
-  m = mean x
-  n = fromIntegral $ rows x
-
-lsRegress :: [Vector Double] -> Int -> [Vector Double]
-lsRegress = undefined
-
-makePlane :: Matrix Double -> Double -> Hyperplane
-makePlane mat cutoff = Hyperplane n m rows
-  where
-  n = cols mat
-  m = fromList $ mean mat
-  normalizedmat = normalize mat
-  (_,rows) = trimSVDRight cutoff normalizedmat
-  
-trimSVDRight :: Double -> Matrix Double -> (Vector Double, Matrix Double)
-trimSVDRight min inmat = (v, outmat)
-  where
-  (v1,m1) = rightSV inmat
-  v = fromList . takeWhile (>= min) . toList $ v1
-  outmat = trans $ takeColumns (dim v) m1
-  
-distance2 :: Vector Double -> Hyperplane -> Double
-distance2 v (Hyperplane n hv m) = norm_2 $ distancemat #> v'
-  where
-  v' = v - hv
-  distancemat = (trans m) * m - (ident n)
-  
-  
