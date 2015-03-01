@@ -1,6 +1,9 @@
 import Numeric.LinearAlgebra.HMatrix
 import Data.Packed.Matrix
 import Data.Packed.Vector
+import ImageToVector (loadImages)
+import System.Environment (getArgs)
+import System.Directory (getDirectoryContents)
 
 data Hyperplane = Hyperplane Int (Vector Double) (Matrix Double) deriving (Show, Read)
   -- first argument is the dimension of the ambient space
@@ -58,7 +61,19 @@ load :: FilePath -> IO Hyperplane
 -- loads a hyperplane that was saved in the syntax of `save`
 load f = readFile f >>= (return . read)
 
-
+main :: IO ()
+main = do
+  [dir, height, width, threshold] <- getArgs
+  let h' = read height
+  let w' = read width
+  let t' = read threshold
+  imageFiles <- getDirectoryContents dir
+  let imagePaths = map (("./" ++ dir) ++) imageFiles
+  matrix <- fmap fromRows $ loadImages imagePaths h' w'
+  let linreg = makePlane matrix t'
+  print linreg
+  
+  
 
 
 

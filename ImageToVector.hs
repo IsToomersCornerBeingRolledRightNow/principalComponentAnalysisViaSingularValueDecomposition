@@ -1,7 +1,5 @@
-{-# LANGUAGE ScopedTypeVariables #-}
 module ImageToVector (loadImages) where
 import Data.Packed.Vector
---import qualified Data.Vector as FV
 import Vision.Image
 import Vision.Image.Storage.DevIL (BMP (..), load)
 
@@ -22,7 +20,7 @@ loadImage h w path = do
          putStrLn "Error loading image:"
          print err
          undefined
-       Right (rgb :: RGB) -> do
+       Right rgb -> do
          return $ imageToVector $ changeResolution h w rgb
          
 loadImages :: [FilePath] -> Int -> Int -> IO [Vector Double]
