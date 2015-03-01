@@ -2,7 +2,7 @@ import Numeric.LinearAlgebra.HMatrix
 import Data.Packed.Matrix
 import Data.Packed.Vector
 
-data Hyperplane = Hyperplane Int (Vector Double) (Matrix Double) deriving (Show)
+data Hyperplane = Hyperplane Int (Vector Double) (Matrix Double) deriving (Show, Read)
   -- first argument is the dimension of the ambient space
   -- second argument is a vector in the hyperplane
   -- rows of third argument is the basis of the parallel linear subspace
@@ -50,8 +50,13 @@ distance2 v (Hyperplane n hv m) = norm_2 $ distancemat #> v'
   v' = v - hv
   distancemat = (trans m) * m - (ident n)
   
+save :: FilePath -> Hyperplane -> IO ()
+-- saves a hyperplane in machine-readable plaintext format
+save f h = writeFile f (show h)
 
-
+load :: FilePath -> IO Hyperplane
+-- loads a hyperplane that was saved in the syntax of `save`
+load f = readFile f >>= (return . read)
 
 
 
