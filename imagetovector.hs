@@ -9,5 +9,5 @@ imageToVector = fromList . concatMap f . toList . manifestVector
   f :: RGBPixel -> [Double]
   f (RGBPixel r g b) = [fromIntegral r, fromIntegral g, fromIntegral b]
   
-reduceResolution :: Int -> Int -> RGB -> RGB
-reduceResolution h w img = resize NearestNeighbor (manifestSize img) img
+changeResolution :: Int -> Int -> RGB -> RGB
+changeResolution h w img = resize NearestNeighbor (manifestSize img) img
