@@ -14,3 +14,5 @@ cabal.config
 *~
 *.save0
 sample-data*
+pca
+
