@@ -63,13 +63,13 @@ load f = readFile f >>= (return . read)
 
 main :: IO ()
 main = do
-  [dir, height, width, threshold] <- getArgs
-  let h' = read height
+  [dir, width, height, threshold] <- getArgs
   let w' = read width
+  let h' = read height
   let t' = read threshold
   imageFiles <- getDirectoryContents dir
   let imagePaths = map (("./" ++ dir) ++) imageFiles
-  matrix <- fmap fromRows $ loadImages imagePaths h' w'
+  matrix <- fmap fromRows $ loadImages imagePaths w' h'
   let linreg = makePlane matrix t'
   print linreg
   
