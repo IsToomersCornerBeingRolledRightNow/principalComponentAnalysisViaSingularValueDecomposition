@@ -1,5 +1,5 @@
 {-# LANGUAGE ScopedTypeVariables #-}
-module ImageToVector where
+module ImageToVector (loadImages) where
 import Data.Packed.Vector
 --import qualified Data.Vector as FV
 import Vision.Image
