@@ -1,6 +1,7 @@
 module ImageToVector (loadImages) where
 import Data.Packed.Vector
 import Vision.Image
+import Vision.Primitive.Shape
 import Vision.Image.Storage.DevIL (BMP (..), load)
 
 imageToVector :: RGB -> Vector Double
@@ -10,10 +11,10 @@ imageToVector = fromList . concatMap f . toList . manifestVector
   f (RGBPixel r g b) = [fromIntegral r, fromIntegral g, fromIntegral b]
   
 changeResolution :: Int -> Int -> RGB -> RGB
-changeResolution h w img = resize NearestNeighbor (manifestSize img) img
+changeResolution w h img = resize NearestNeighbor (Z :. w :. h) img
 
 loadImage :: Int -> Int -> FilePath -> IO (Vector Double)
-loadImage h w path = do
+loadImage w h path = do
   img <- load BMP path
   case img of
        Left err -> do
@@ -21,7 +22,7 @@ loadImage h w path = do
          print err
          undefined
        Right rgb -> do
-         return $ imageToVector $ changeResolution h w rgb
+         return $ imageToVector $ changeResolution w h rgb
          
 loadImages :: [FilePath] -> Int -> Int -> IO [Vector Double]
-loadImages paths h w = mapM (loadImage h w) paths
+loadImages paths w h = mapM (loadImage h w) paths
