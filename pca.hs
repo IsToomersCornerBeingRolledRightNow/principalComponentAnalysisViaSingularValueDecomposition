@@ -53,13 +53,13 @@ distance2 v (Hyperplane n hv m) = norm_2 $ distancemat #> v'
   v' = v - hv
   distancemat = (trans m) * m - (ident n)
   
-save :: FilePath -> Hyperplane -> IO ()
+--save :: FilePath -> Hyperplane -> IO ()
 -- saves a hyperplane in machine-readable plaintext format
-save f h = writeFile f (show h)
+--save f h = writeFile f (show h)
 
-load :: FilePath -> IO Hyperplane
+--load :: FilePath -> IO Hyperplane
 -- loads a hyperplane that was saved in the syntax of `save`
-load f = readFile f >>= (return . read)
+--load f = readFile f >>= (return . read)
 
 main :: IO ()
 main = do

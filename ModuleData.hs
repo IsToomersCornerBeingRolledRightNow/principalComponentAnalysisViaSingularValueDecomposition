@@ -1,4 +1,4 @@
-module PCA.Data
+module ModuleData
 ( Hyperplane
 ) where
 
