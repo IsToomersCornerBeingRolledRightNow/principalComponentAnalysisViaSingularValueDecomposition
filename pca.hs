@@ -63,13 +63,13 @@ distance2 v (Hyperplane n hv m) = norm_2 $ distancemat #> v'
 
 main :: IO ()
 main = do
-  [dir, width, height, threshold] <- getArgs
-  let w' = read width
+  [dir, height, width, threshold] <- getArgs
   let h' = read height
+  let w' = read width
   let t' = read threshold
   imageFiles <- getDirectoryContents dir
   let imagePaths = map (("./" ++ dir) ++) imageFiles
-  matrix <- fmap fromRows $ loadImages imagePaths w' h'
+  matrix <- fmap fromRows $ loadImages imagePaths h' w'
   let linreg = makePlane matrix t'
   print linreg
   
