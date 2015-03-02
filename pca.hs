@@ -69,10 +69,11 @@ main = do
   let t' = read threshold
   imageFiles <- getDirectoryContents dir
   let imagePaths = map (("./" ++ dir) ++) imageFiles
-  matrix <- fmap fromRows $ loadImages imagePaths h' w'
+  maybeImages <- loadImages imagePaths h' w'
+  let rows = [a | Just a <- maybeImages]
+  let matrix = fromRows rows
   let linreg = makePlane matrix t'
-  print linreg
-  
+  print linreg  
   
 
 

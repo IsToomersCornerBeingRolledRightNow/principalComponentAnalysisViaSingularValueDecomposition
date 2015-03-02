@@ -13,16 +13,16 @@ imageToVector = fromList . concatMap f . toList . manifestVector
 changeResolution :: Int -> Int -> RGB -> RGB
 changeResolution w h img = resize NearestNeighbor (Z :. w :. h) img
 
-loadImage :: Int -> Int -> FilePath -> IO (Vector Double)
+loadImage :: Int -> Int -> FilePath -> IO (Maybe (Vector Double))
 loadImage w h path = do
   img <- load BMP path
   case img of
        Left err -> do
          putStrLn "Error loading image:"
          print err
-         undefined
+         return Nothing
        Right rgb -> do
-         return $ imageToVector $ changeResolution w h rgb
+         return $ Just (imageToVector $ changeResolution w h rgb)
          
-loadImages :: [FilePath] -> Int -> Int -> IO [Vector Double]
+loadImages :: [FilePath] -> Int -> Int -> IO [Maybe (Vector Double)]
 loadImages paths w h = mapM (loadImage h w) paths
