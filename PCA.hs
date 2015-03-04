@@ -12,12 +12,11 @@ import Data.Packed.Matrix
 import Data.Packed.Vector
 
 data Hyperplane = Hyperplane Int (Vector Double) (Matrix Double) deriving (Show, Read)
-{-| First argument is the dimension of the ambient space.
-    Second argument is some vector in the hyperplane.
-    Rows of third argument form the basis of the parallel
-    linear subspace.
-    The Hyperplane is the coset of the second arg mod the third arg.
--}
+-- First argument is the dimension of the ambient space.
+-- Second argument is some vector in the hyperplane.
+-- Rows of third argument form the basis of the parallel
+-- linear subspace.
+-- The Hyperplane is the coset of the second arg mod the third arg.
 
 saveHyperplane :: FilePath -> Hyperplane -> IO ()
 -- Saves a hyperplane in machine-readable plaintext format.
@@ -38,14 +37,13 @@ normalize :: Matrix Double -> Matrix Double
 normalize x = x - (fromRows . replicate (rows x) . mean $ x)
 
 linRegression :: Double -> Matrix Double -> Hyperplane
-{-| Finds the best-fit hyperplane of the rows of a matrix.
-    First argument is the threshold to use a singular value.
-	Second argument is your data, rows are individual datapoints.
-	The first argument controls the size of the hyperplane.
-	If the first argument is too small, the hyperplane will just be
-	the whole space. If the first argument is too big, the hyper-
-	plane will just be a single point.
--}
+-- Finds the best-fit hyperplane of the rows of a matrix.
+-- First argument is the threshold to use a singular value.
+-- Second argument is your data, rows are individual datapoints.
+-- The first argument controls the size of the hyperplane.
+-- If the first argument is too small, the hyperplane will just be
+-- the whole space. If the first argument is too big, the hyper-
+-- plane will just be a single point.
 linRegression min inmat = Hyperplane n m rows
   where
   n = cols inmat
@@ -54,12 +52,11 @@ linRegression min inmat = Hyperplane n m rows
   (_,rows) = trimSVDRight min normalizedmat
 
 trimSVDRight :: Double -> Matrix Double -> (Vector Double, Matrix Double)
-{-| Returns partial diagonal and right-side factor from SVD of
-	a matrix.
-	First argument is the threshold to use a singular value
-	(setting to 0 will return all singular values).
-	Second argument is a matrix.
--}
+-- Returns partial diagonal and right-side factor from SVD of
+-- a matrix.
+-- First argument is the threshold to use a singular value
+-- (setting to 0 will return all singular values).
+-- Second argument is a matrix.
 trimSVDRight min inmat = (v, outmat)
   where
   (v1,m1) = rightSV inmat
