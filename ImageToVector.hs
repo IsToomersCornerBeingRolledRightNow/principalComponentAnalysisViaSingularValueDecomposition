@@ -3,7 +3,7 @@ module ImageToVector (loadImage, loadImages) where
 import Data.Packed.Vector
 import Vision.Image
 import Vision.Primitive.Shape
-import Vision.Image.Storage.DevIL (BMP (..), load)
+import Vision.Image.Storage.DevIL (Autodetect (..), load)
 
 imageToVector :: RGB -> Vector Double
 imageToVector = fromList . concatMap f . toList . manifestVector
@@ -16,7 +16,7 @@ changeResolution w h img = resize NearestNeighbor (Z :. w :. h) img
 
 loadImage :: Int -> Int -> FilePath -> IO (Maybe (Vector Double))
 loadImage w h path = do
-  img <- load BMP path
+  img <- load Autodetect path
   case img of
        Left err -> do
          putStrLn "Error loading image:"
