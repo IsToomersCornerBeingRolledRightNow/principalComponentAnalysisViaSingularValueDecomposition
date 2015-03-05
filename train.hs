@@ -13,10 +13,10 @@ main = do
   let w' = read width
   let t' = read threshold
   imageFiles <- getDirectoryContents dir
-  let imagePaths = map (("./" ++ dir) ++) imageFiles
+  let imagePaths = map ((dir ++ "/") ++) imageFiles
   maybeImages <- loadImages w' h' imagePaths
   let rows = [a | Just a <- maybeImages]
   let matrix = fromRows rows
-  let linreg = linRegression t' matrix
-  print linreg
+  let (Hyperplane dim mean rows) = linRegression t' matrix
+  print dim
 

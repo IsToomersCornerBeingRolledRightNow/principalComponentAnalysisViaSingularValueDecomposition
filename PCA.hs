@@ -1,5 +1,5 @@
 module PCA
-( Hyperplane
+( Hyperplane (..)
 , saveHyperplane
 , loadHyperplane
 , linRegression
