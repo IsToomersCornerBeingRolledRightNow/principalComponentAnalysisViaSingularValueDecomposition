@@ -3,6 +3,7 @@ module PCA
 , saveHyperplane
 , loadHyperplane
 , linRegression
+, linRegressionDebug
 , distance2
 ) where
 
@@ -50,6 +51,13 @@ linRegression min inmat = Hyperplane n m rows
   m = mean inmat
   normalizedmat = normalize inmat
   (_,rows) = trimSVDRight min normalizedmat
+  
+linRegressionDebug min inmat = (singularVector, Hyperplane n m rows)
+  where
+  n = cols inmat
+  m = mean inmat
+  normalizedmat = normalize inmat
+  (singularVector,rows) = trimSVDRight min normalizedmat
 
 trimSVDRight :: Double -> Matrix Double -> (Vector Double, Matrix Double)
 -- Returns partial diagonal and right-side factor from SVD of
