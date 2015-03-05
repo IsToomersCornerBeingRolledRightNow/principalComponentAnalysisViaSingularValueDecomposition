@@ -1,5 +1,5 @@
 module ImageToVector (loadImage, loadImages) where
--- we will end up needing the loadImage function
+
 import Data.Packed.Vector
 import Vision.Image
 import Vision.Primitive.Shape
@@ -26,5 +26,5 @@ loadImage w h path = do
          return $ Just (imageToVector $ changeResolution w h rgb)
          
 loadImages :: Int -> Int -> [FilePath] -> IO [Maybe (Vector Double)]
--- argument order changed to agree with loadImage
-loadImages w h = mapM (loadImage h w) -- point-free style, also we can more clearly see the action of mapM this way
+loadImages w h = mapM (loadImage w h)
+
