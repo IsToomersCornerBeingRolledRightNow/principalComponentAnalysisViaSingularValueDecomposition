@@ -17,10 +17,10 @@ defaultImg = Manifest (Z :. 1 :. 1) (V.singleton (RGBPixel 0 0 0))
 
 main :: IO ()
 main = do
-  [imgPath] <- getArgs
-  --imageFiles <- getDirectoryContents dir 
-  --let imagePaths = map ((dir ++ "/") ++) imageFiles
-  maybeImage <- loadImage imgPath
-  let img = maybe defaultImg id maybeImage
-  let pieces = chop 80 80 img
-  print $ length pieces
+  [dir] <- getArgs
+  imageFiles <- getDirectoryContents dir 
+  let imagePaths = map ((dir ++ "/") ++) imageFiles
+  maybeImages <- loadImages imagePaths
+  let images = [a | Just a <- maybeImages]
+  let pieces = map (chop 80 80) images
+  print $ map length pieces

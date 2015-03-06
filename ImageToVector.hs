@@ -1,4 +1,6 @@
-module ImageToVector (loadImage, loadImages, chop) where
+module ImageToVector (loadImage, loadImageToVector
+                     , loadImages, loadImagesToVectors
+                     , chop) where
 
 import Data.Packed.Vector
 import Vision.Image hiding (map)
@@ -26,6 +28,9 @@ loadImageToVector w h path = do
        Right rgb -> do
          return $ Just (imageToVector $ changeResolution w h rgb)
          
+loadImagesToVectors :: Int -> Int -> [FilePath] -> IO [Maybe (Vector Double)]
+loadImagesToVectors w h = mapM (loadImageToVector w h)
+         
 loadImage :: FilePath -> IO(Maybe RGB)
 loadImage path = do
   img <- load Autodetect path
@@ -37,8 +42,8 @@ loadImage path = do
        Right rgb -> do
          return $ Just rgb
          
-loadImages :: Int -> Int -> [FilePath] -> IO [Maybe (Vector Double)]
-loadImages w h = mapM (loadImageToVector w h)
+loadImages :: [FilePath] -> IO [Maybe RGB]
+loadImages = mapM loadImage
 
 imageDim :: RGB -> (Int,Int)
 imageDim img = (w,h)
