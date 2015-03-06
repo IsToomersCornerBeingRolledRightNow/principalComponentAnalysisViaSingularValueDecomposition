@@ -24,6 +24,7 @@ executable train
                        , hmatrix == 0.16.1.4
                        , directory == 1.2.0.1
                        , friday-devil == 0.1.0.1
+                       , friday == 0.2.0.2
   -- hs-source-dirs:      
   default-language:    Haskell2010
   
