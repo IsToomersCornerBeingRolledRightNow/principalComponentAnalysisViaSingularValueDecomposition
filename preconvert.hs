@@ -23,4 +23,5 @@ main = do
   maybeImages <- loadImages imagePaths
   let images = [a | Just a <- maybeImages]
   let pieces = map (chop 80 80) images
+  --print $ manifestSize $ (last . head) pieces
   print $ map length pieces

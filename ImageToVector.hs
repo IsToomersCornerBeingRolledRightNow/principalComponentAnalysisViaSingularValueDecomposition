@@ -52,9 +52,9 @@ imageDim img = (w,h)
 rects :: Int -> Int -> RGB -> [Rect]
 rects w h img = (Rect 0 0 w h):(next 0 0)
   where
-  next x y = if (x + w > ((fst . imageDim) img)) && (y + h > ((snd . imageDim) img))
+  next x y = if (x + w >= ((fst . imageDim) img)) && (y + h >= ((snd . imageDim) img))
              then []
-             else if x + w > ((fst . imageDim) img)
+             else if x + w >= ((fst . imageDim) img)
              then (Rect 0 (y + h) w h):(next 0 (y+h))
              else (Rect (x + w) y w h):(next (x+w) y)
              
