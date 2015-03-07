@@ -1,33 +1,27 @@
-{-# LANGUAGE BangPatterns #-}
-import PCA
-import ImageToVector
 
-import System.Directory
-import System.Environment
-import Data.Packed.Matrix
-import Data.Packed.Vector
-import Numeric.LinearAlgebra.HMatrix
-import Vision.Image hiding (map)
-import Vision.Image.Storage.DevIL
-import Vision.Primitive
-import Vision.Primitive.Shape
+import ImageToVector (loadImages, chop)
+import System.Directory (createDirectoryIfMissing)
+import System.Environment (getArgs)
+import Vision.Image (RGB)
+import Vision.Image.Storage.DevIL (save, PNG(..))
+import Vision.Primitive.Shape((:.),Z)
 import qualified Data.Vector.Storable as V
-import qualified Data.Text as T
+import Data.List (elemIndices, splitAt)
 
-defaultImg :: RGB
-defaultImg = Manifest (Z :. 1 :. 1) (V.singleton (RGBPixel 0 0 0))
+
+--defaultImg :: RGB
+--defaultImg = Manifest (Z :. 1 :. 1) (V.singleton (RGBPixel 0 0 0))
 
 getDir :: FilePath -> FilePath
-getDir f = (:) '.' $ T.unpack 
-  . T.concat
-  . fmap (flip T.snoc '/')  
-  . init 
-  $ T.splitOn (T.pack "/") (T.pack f)
-
+getDir = fst . splitFileName
 getFileName :: FilePath -> FilePath
-getFileName f = T.unpack
-  . last
-  $ T.splitOn (T.pack "/") (T.pack f)
+getFileName = snd . splitFileName
+
+splitFileName :: FilePath -> (FilePath,FilePath)
+splitFileName f = case (elemIndices '/' f) of
+  [] -> (".", f)
+  x -> splitAt (last x) f
+
 
 main :: IO ()
 main = do

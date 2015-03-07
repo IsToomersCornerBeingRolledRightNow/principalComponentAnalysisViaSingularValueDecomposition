@@ -1,13 +1,12 @@
 #!/bin/bash
 
-numsv=$2
-numimg=$3
-numslices=144
-basedir="$1"
-traindist="/home/theapp/pca/dist/build/train/train"
+dir="$1"
+preconvertdist="/home/theapp/pca/dist/build/preconvert/preconvert"
+filelist=$(find "$dir" -maxdepth 1 -iname "*.png")
+numfiles=$(echo "$filelist" | wc -l)
 
-function train {
-  $traindist "$basedir/$1/" $numsv $numimg
+function preconvert {
+  $preconvertdist "$1"
 }
 
 function format {
@@ -47,10 +46,13 @@ function clearline {
   echo -n -e "\r"
 }
 
-for i in $(seq 1 $numslices);
+
+i=0
+for f in $filelist
 do
-  out=$(train $i)
+  out=$(preconvert $f)
   clearline
-  echo $out
-  progress $i $numslices
+  echo "$out"
+  let i=i+1
+  progress $i $numfiles
 done
