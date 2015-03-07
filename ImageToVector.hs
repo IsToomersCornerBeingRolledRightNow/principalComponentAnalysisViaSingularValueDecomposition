@@ -17,8 +17,8 @@ imageToVector = fromList . concatMap f . toList . manifestVector
 changeResolution :: Int -> Int -> RGB -> RGB
 changeResolution w h img = resize NearestNeighbor (Z :. w :. h) img
 
-loadImageToVector :: Int -> Int -> FilePath -> IO (Maybe (Vector Double))
-loadImageToVector w h path = do
+loadImageToVector :: FilePath -> IO (Maybe (Vector Double))
+loadImageToVector path = do
   img <- load Autodetect path
   case img of
        Left err -> do
@@ -26,10 +26,10 @@ loadImageToVector w h path = do
          --print err
          return Nothing
        Right rgb -> do
-         return $ Just (imageToVector $ changeResolution w h rgb)
+         return $ Just $ imageToVector rgb
          
-loadImagesToVectors :: Int -> Int -> [FilePath] -> IO [Maybe (Vector Double)]
-loadImagesToVectors w h = mapM (loadImageToVector w h)
+loadImagesToVectors :: [FilePath] -> IO [Maybe (Vector Double)]
+loadImagesToVectors = mapM loadImageToVector
          
 loadImage :: FilePath -> IO(Maybe RGB)
 loadImage path = do
