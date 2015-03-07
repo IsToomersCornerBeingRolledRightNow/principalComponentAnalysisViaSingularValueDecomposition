@@ -22,8 +22,8 @@ loadImageToVector w h path = do
   img <- load Autodetect path
   case img of
        Left err -> do
-         putStrLn $ "Error loading image:" ++ path
-         print err
+         --putStrLn $ "Error loading image:" ++ path
+         --print err
          return Nothing
        Right rgb -> do
          return $ Just (imageToVector $ changeResolution w h rgb)

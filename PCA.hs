@@ -36,7 +36,7 @@ normalize :: Matrix Double -> Matrix Double
 -- Subtracts the average of/from the rows of a matrix.
 normalize x = x - (fromRows . replicate (rows x) . mean $ x)
 
-linRegression :: Double -> Matrix Double -> Hyperplane
+linRegression :: Int -> Matrix Double -> Hyperplane
 -- Finds the best-fit hyperplane of the rows of a matrix.
 -- First argument is the threshold to use a singular value.
 -- Second argument is your data, rows are individual datapoints.
@@ -44,23 +44,21 @@ linRegression :: Double -> Matrix Double -> Hyperplane
 -- If the first argument is too small, the hyperplane will just be
 -- the whole space. If the first argument is too big, the hyper-
 -- plane will just be a single point.
-linRegression min inmat = Hyperplane n m rows
+linRegression numsv inmat = Hyperplane n m rows
   where
   n = cols inmat
   m = mean inmat
   normalizedmat = normalize inmat
-  (_,rows) = trimSVDRight min normalizedmat
+  (_,rows) = trimSVDRight numsv normalizedmat
 
-trimSVDRight :: Double -> Matrix Double -> (Vector Double, Matrix Double)
+trimSVDRight :: Int -> Matrix Double -> (Vector Double, Matrix Double)
 -- Returns partial diagonal and right-side factor from SVD of
 -- a matrix.
--- First argument is the threshold to use a singular value
--- (setting to 0 will return all singular values).
--- Second argument is a matrix.
-trimSVDRight min inmat = (v, outmat)
+trimSVDRight numsv inmat = (v, outmat)
   where
+  n' = min numsv (dim v1 - 1)
   (v1,m1) = rightSV inmat
-  v = fromList . takeWhile (>= min) . toList $ v1
+  v = fromList . take n' . toList $ v1
   outmat = trans $ takeColumns (dim v) m1
 
 distance2 :: Hyperplane -> Vector Double -> Double
