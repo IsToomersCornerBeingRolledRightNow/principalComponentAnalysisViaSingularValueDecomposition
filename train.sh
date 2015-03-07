@@ -1,7 +1,7 @@
 #!/bin/bash
 
-numsv=40
-numimg=140
+numsv=$2
+numimg=$3
 numslices=144
 basedir="$1"
 traindist="/home/theapp/pca/dist/build/train/train"
