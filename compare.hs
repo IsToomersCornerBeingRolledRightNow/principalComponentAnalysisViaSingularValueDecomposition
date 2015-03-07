@@ -5,6 +5,6 @@ import ImageToVector (loadImageToVector)
 main :: IO ()
 main = do
   [imagePath, hyperplanePath] <- getArgs
-  Just i <- loadImageToVector 80 80 imagePath
+  Just i <- loadImageToVector imagePath
   h <- loadHyperplane hyperplanePath
   print $ distance h i

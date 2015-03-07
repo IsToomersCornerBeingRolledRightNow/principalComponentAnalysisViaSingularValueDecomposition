@@ -17,18 +17,16 @@ main = do
                 arg3:_ -> take (read arg3)
   putStr $ concat 
     [ "Dir: ", dir
-    , "sv: ", show numsv,", "]
+    , " \tsv: ", show numsv,", \t"]
   hFlush stdout
   imageFiles <- getDirectoryContents dir
-  let imagePaths = takeImgs $ map ((dir ++ "/") ++) imageFiles
-  maybeImages <- loadImagesToVectors 80 80 imagePaths
-  let rows = [a | Just a <- maybeImages]
+  maybeImages <- loadImagesToVectors 20 20 
+                 $ map ((dir ++ "/") ++) imageFiles
+  let rows = takeImgs [a | Just a <- maybeImages]
   putStr $ concat 
-    [ show.length$rows, " images. "]
+    [ show . length $ rows, " images. "]
   hFlush stdout
-  let matrix = fromRows rows
-  let h@(Hyperplane dim mean rows) = linRegression numsv matrix
+  let h = linRegression numsv $ fromRows rows
   saveHyperplane (dir++"/hyperplane.txt") h
-  putStrLn $ concat
-    [ "Done! ", show dim]
+  putStrLn "Done!"
 
