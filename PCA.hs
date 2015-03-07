@@ -3,7 +3,7 @@ module PCA
 , saveHyperplane
 , loadHyperplane
 , linRegression
-, distance2
+, distance
 ) where
 
 import Numeric.LinearAlgebra.HMatrix
@@ -61,13 +61,15 @@ trimSVDRight numsv inmat = (v, outmat)
   v = fromList . take n' . toList $ v1
   outmat = trans $ takeColumns (dim v) m1
 
-distance2 :: Hyperplane -> Vector Double -> Double
+distance :: Hyperplane -> Vector Double -> Double
 -- Finds the square of the distance from a vector to a hyperplane.
-distance2 (Hyperplane n hv m) v 
+distance (Hyperplane n hv m) v 
   | cols m == 0 = norm_2 v'
   | rows m == 0 = norm_2 v'
-  | otherwise   = norm_2 $ distancemat #> v'
+  | otherwise   = norm_2 $ distancevec
   where
   v' = v - hv
-  distancemat = (trans m) * m - (ident n)
+  distancevec = let a = m #> v'
+                    b = trans m #> a in
+                a `seq` b `seq` (b - v')
 

@@ -15,13 +15,13 @@ main = do
   putStr $ concat 
     [ "Dir: ", dir
     , ", WxH: ",width,"x",height,", "
-    , "sv: ", numsv," ... "]
+    , "sv: ", numsv,", "]
   imageFiles <- getDirectoryContents dir
   let imagePaths = map ((dir ++ "/") ++) imageFiles
   maybeImages <- loadImagesToVectors w' h' imagePaths
   let rows = [a | Just a <- maybeImages]
   putStr $ concat 
-    [ show.length$rows, " images ... "]
+    [ show.length$rows, " images. "]
   let matrix = fromRows rows
   let h@(Hyperplane dim mean rows) = linRegression n' matrix
   saveHyperplane (dir++"/hyperplane.txt") h
