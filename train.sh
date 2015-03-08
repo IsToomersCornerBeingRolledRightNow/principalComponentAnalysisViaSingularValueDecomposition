@@ -1,9 +1,9 @@
 #!/bin/bash
 
-numsv=$2
-numimg=$3
-numslices=144
 basedir="$1"
+numsv=$2
+numimg=$3 #optional
+numslices=144
 traindist="/home/theapp/pca/dist/build/train/train"
 
 function train {

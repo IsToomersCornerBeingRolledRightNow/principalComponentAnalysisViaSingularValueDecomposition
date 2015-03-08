@@ -1,6 +1,7 @@
 module ImageToVector (loadImage, loadImageToVector
                      , loadImages, loadImagesToVectors
-                     , chop) where
+                     , imageToVector
+                     , chop, changeResolution) where
 
 import Data.Packed.Vector
 import Vision.Image hiding (map)
