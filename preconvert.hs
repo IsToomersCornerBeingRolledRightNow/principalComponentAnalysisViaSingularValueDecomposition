@@ -25,7 +25,7 @@ splitFileName f = case (elemIndices '/' f) of
 
 main :: IO ()
 main = do
-  [imagePath] <- getArgs
+  imagePath:_ <- getArgs
   print imagePath
   let imageFiles = [getFileName imagePath]
       dir = getDir imagePath
