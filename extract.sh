@@ -8,7 +8,7 @@
 sourceDir=$1
 targetDir=$2
 
-if [[ -d targetDir ]]; then
+if [[ -d $targetDir ]]; then
   echo "Target directory exists. Aborting."
   exit
 fi
