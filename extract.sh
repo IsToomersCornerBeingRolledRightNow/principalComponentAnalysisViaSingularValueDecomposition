@@ -13,7 +13,7 @@ if [[ -d $targetDir ]]; then
   exit
 fi
 
-mkdir ./targetDir
+mkdir $targetDir
 
 for i in $(seq 1 144); do
   mkdir $targetDir/$i
