@@ -1,3 +1,9 @@
+-- preconvert.hs
+-- Compiles to executable.
+-- We're passed the path to an image. We expect that image to be 1280 by
+-- 720, and we chop that image into 144 80 by 80 pieces, saving the
+-- pieces with the same file name as the original but in numbered
+-- subdirectories, chopped/1, chopped/2, ...
 import ImageToVector (loadImages, chop)
 import System.Directory (createDirectoryIfMissing)
 import System.Environment (getArgs)

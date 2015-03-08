@@ -1,3 +1,7 @@
+-- PCA.hs
+-- Compiles to library.
+-- This library contains the functions needed to perform principle
+-- component anlysis on vectorized data.
 module PCA
 ( Hyperplane (..)
 , mean
@@ -63,7 +67,7 @@ trimSVDRight numsv inmat = (v, outmat)
   outmat = trans $ takeColumns (dim v) m1
 
 distance :: Hyperplane -> Vector Double -> Double
--- Finds the square of the distance from a vector to a hyperplane.
+-- Finds the distance from a vector to a hyperplane.
 distance (Hyperplane n hv m) v 
   | cols m == 0 = norm_2 v'
   | rows m == 0 = norm_2 v'

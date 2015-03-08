@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# we're passed the dir path .../chopped, which contains 144 folders, each with 10k images and a hyperplane.txt inside
-# we want to run genstats.hs on each of the 144 dirs
-# that's about it, could just be a one-liner
+# We're passed the path of the directory containing chopped images and 
+# hyperplanes. This script runs genstats on each of the 144 subdirs,
+# so that each directory should end up containing avgdist.txt.
 
 basedir="$1"
 numslices=144

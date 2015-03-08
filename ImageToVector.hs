@@ -1,3 +1,7 @@
+-- ImageToVector.hs
+-- Compiles to a library.
+-- This library contains utility functions for loading, converting, and
+-- manipulating images.
 module ImageToVector
 ( loadImage
 , loadImageToVector

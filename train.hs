@@ -1,3 +1,9 @@
+-- train.hs
+-- Compiles to executable.
+-- We're passed (1) the path to a directory and (2) an integer.
+-- Saves a hyperplane (dim = 2nd arg) that is the linear regression
+-- of all of the images in the directory to hyperplane.txt in the same
+-- directory.
 import PCA
 import ImageToVector
 

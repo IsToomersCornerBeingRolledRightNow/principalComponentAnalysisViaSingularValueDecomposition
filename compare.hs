@@ -1,3 +1,12 @@
+-- compare.hs
+-- Compiles to an executable.
+-- We're passed (1) the path to a directory that contains training data
+-- and (2) the path to an image from the camera feed.
+-- Chops up the image and calculates, for each sector, the distance to
+-- the linear-regression hyperplane for that sector, and divides by the
+-- training data's average distance to the same hyperplane.
+-- Returns, to stdout, the square sum of the scores described above.
+-- Higher number means the image is more irregular.
 import PCA (loadHyperplane, distance, Hyperplane)
 import System.Environment (getArgs)
 import ImageToVector 

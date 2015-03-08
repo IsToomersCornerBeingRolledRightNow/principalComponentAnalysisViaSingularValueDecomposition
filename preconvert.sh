@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# We're passed a directory that contains thousands of images. This
+# script runs preconvert on each image. Results should be 144 subdirs
+# chopped/1, chopped/2, ..., each of which should contains thousands
+# images.
+
 dir="$1"
 preconvertdist="/home/theapp/pca/dist/build/preconvert/preconvert"
 filelist=$(find "$dir" -maxdepth 1 -iname "*.png")

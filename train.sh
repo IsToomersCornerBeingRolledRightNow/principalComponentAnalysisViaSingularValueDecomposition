@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# We're passed the path to a directory containing chopped images. This
+# script runs train on each subdir, which analyzes the images contained
+# inside and writes a file, hyperplane.txt, into that subdir.
+
 basedir="$1"
 numsv=$2
 numimg=$3 #optional

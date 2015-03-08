@@ -1,3 +1,8 @@
+-- meanframe.hs
+-- Compiles to executable.
+-- We are passed a directory. We find any images in that directory,
+-- average them, and save the average as average/average.png.
+-- This tool is not used in the training or analysis of images.
 import ImageToVector (loadImagesToVectors, vectorToImage)
 import System.Environment (getArgs)
 import Data.Maybe (catMaybes)
