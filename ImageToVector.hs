@@ -8,12 +8,25 @@ import Vision.Image hiding (map)
 import Vision.Primitive
 import Vision.Primitive.Shape
 import Vision.Image.Storage.DevIL (Autodetect (..), load)
+import Data.Word (Word8)
 
 imageToVector :: RGB -> Vector Double
 imageToVector = fromList . concatMap f . toList . manifestVector
   where
   f :: RGBPixel -> [Double]
   f (RGBPixel r g b) = [fromIntegral r, fromIntegral g, fromIntegral b]
+
+
+vectorToImage :: Size -> Vector Double -> RGB
+vectorToImage s v = kludgeImg s
+  . toList . mapVector (fromIntegral . floor) $ v
+
+kludgeImg :: Size -> [Word8] -> RGB
+kludgeImg s xs = Manifest s $ fromList $ take k $ pxls (xs ++ repeat 0)
+  where
+  k = let (Z :. w :. h) = s in w * h
+  pxls (x:y:z:rest) = RGBPixel x y z : pxls rest
+  
   
 changeResolution :: Int -> Int -> RGB -> RGB
 changeResolution w h img = resize NearestNeighbor (Z :. w :. h) img
