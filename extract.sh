@@ -16,7 +16,7 @@ fi
 mkdir ./targetDir
 
 for i in $(seq 1 144); do
-  mkdir ./$targetDir/$i
+  mkdir $targetDir/$i
   cp $sourceDir/$i/hyperplane.txt $targetDir/$i/hyperplane.txt
   cp $sourceDir/$i/avgdist.txt $targetDir/$i/avgdist.txt
 done
