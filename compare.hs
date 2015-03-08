@@ -1,4 +1,3 @@
-module Compare where
 import PCA (loadHyperplane, distance, Hyperplane)
 import System.Environment (getArgs)
 import ImageToVector 
@@ -9,9 +8,6 @@ import ImageToVector
   , changeResolution)
 import Data.Maybe (fromJust)
 
-
-import Vision.Image (RGB)
-
 main = do
   [hyperplaneFolder, imgPath,_] <- getArgs
   loadImage imgPath 
@@ -20,12 +16,15 @@ main = do
      # fmap (changeResolution 20 20)
      # zipWith (f hyperplaneFolder) [1..] 
      # sequence
+     >>= fmap (^2)
+     # sum
+     # return
   where
   f hdir n img = do
     h <- loadHyperplane . concat
          $ [hdir,"/",show n,"/hyperplane.txt"]
     return $ distance h (imageToVector img)
-
+  sumOfSquares = sum . fmap (^2)
 infixl 3 #
 (#) :: (a -> b) -> (b -> c) -> (a -> c)
 (#) = flip (.)
