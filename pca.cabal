@@ -76,3 +76,18 @@ executable genstats
   ghc-options: 
     -O2
 
+executable meanframe
+  main-is:             meanframe.hs
+  -- other-modules:
+  -- other-extensions:
+  build-depends:       base >=4.6
+                       , hmatrix == 0.16.1.4
+                       , directory >= 1.2.0.1
+                       , friday-devil == 0.1.0.1
+                       , vector == 0.10.12.2
+                       , friday == 0.2.0.2
+  -- hs-source-dirs:
+  default-language:    Haskell2010
+  ghc-options: 
+    -O2
+

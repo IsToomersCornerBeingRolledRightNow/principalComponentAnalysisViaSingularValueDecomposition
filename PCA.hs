@@ -1,5 +1,6 @@
 module PCA
 ( Hyperplane (..)
+, mean
 , saveHyperplane
 , loadHyperplane
 , linRegression

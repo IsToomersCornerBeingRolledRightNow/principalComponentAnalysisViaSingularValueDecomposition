@@ -1,4 +1,3 @@
-
 import ImageToVector (loadImages, chop)
 import System.Directory (createDirectoryIfMissing)
 import System.Environment (getArgs)

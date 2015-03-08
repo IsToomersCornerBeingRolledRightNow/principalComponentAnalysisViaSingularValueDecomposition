@@ -1,7 +1,13 @@
-module ImageToVector (loadImage, loadImageToVector
-                     , loadImages, loadImagesToVectors
-                     , imageToVector
-                     , chop, changeResolution) where
+module ImageToVector
+( loadImage
+, loadImageToVector
+, loadImages
+, loadImagesToVectors
+, imageToVector
+, chop
+, changeResolution
+, vectorToImage
+) where
 
 import Data.Packed.Vector
 import Vision.Image hiding (map)
@@ -75,3 +81,4 @@ rects w h img = (Rect 0 0 w h):(next 0 0)
 --takes an rgb image and chops it into w by h chunks
 chop :: Int -> Int -> RGB -> [RGB]
 chop w h img = map ((flip crop) img) (rects w h img)
+
