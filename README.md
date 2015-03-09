@@ -209,6 +209,13 @@ Dinosaur Comics' T-Rex and Toy Story's Rex scored a very respectable 2837, not t
 
 The police barricade scored a whopping 5219.
 
+## Concluding Remarks
+
+Our results indicate to us that Principle Component Analysis can be used as a second-generation image-analysis engine for [IsToomersCornerBeingRolledRightNow.com](http://istoomerscornerbeingrolledrightnow.com) that can be generalized to a wide variety of other urban applications, including early warning systems and real-time traffic/transit information and management.
+
+Our humble proof-of-concept was limited by our relatively small amount of training data (ideally we would want to accumulate training data over the course of several months) and the physical limitation of our desktop computers.
+We believe that with more sophisticated hardware and with a bit of code tweaking to optimize for disk reads and garbage collection, we will have a highly-general image analysis algorithm, capable of detecting arbitrary unusual activity in virtually any setting.
+
 ## Summary of Files
 
 #### `ImageToVector.hs`
