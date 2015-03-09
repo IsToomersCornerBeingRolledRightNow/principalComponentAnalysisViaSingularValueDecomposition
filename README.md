@@ -20,9 +20,9 @@ Our live implementation of [Is Toomer's Corner Being Rolled Right Now](http://is
 
 ![rolled corner](http://istoomerscornerbeingrolledrightnow.github.io/assets/roll3.jpg)
 
-The Canney-gradient algorithm reliably detects large numbers of near-vertical and vertical lines in an image, and thus provides a good guess at whether celebration is happening on the corner.
+The Canny-gradient algorithm reliably detects large numbers of near-vertical and vertical lines in an image, and thus provides a good guess at whether celebration is happening on the corner.
 However, the limits of such an algorithm are apparent as soon as one seeks to generalize to the detection of other phenomenon--it is not clear that the geometric properties of a _usual_ image will be significantly different from those of a _unusual_ image.
-In essence, we lucked out, simply because because of gravity, and Canney-gradient detection takes advantage of that position.
+In essence, we lucked out, simply because because of gravity, and Canny-gradient detection takes advantage of that position.
 
 It became clear to us that if we wanted an image-detection algorithm that was actually anything like useful, we'd need something more general.
 Also, we cannot anticipate the geometric properties that will distinguish unusual images from usual images.
@@ -133,11 +133,11 @@ inside and writes a file, hyperplane.txt, into that subdirectory.
 The week leading up to the competition deadline, we began scraping the Toomer's live web cam feed for periodic frames.
 We managed to collect roughly 10000 still frames, stored as 1280 x 720 32-bit color `.png` files.
 
-PCA relies on performing [singular value decomposition](http://en.wikipedia.org/wiki/Singular_value_decomposition) (abrv. SVD) of the matricized version of our training data (the so-called _principal components_ are those singular vectors corresponding to an arbitrary but fixed number of the largest singular values).
-We first represent each image as a high-dimensional row vector (1280*720*3 dimension, one dimension for each color of each pixel).
-We form the 1280*720*3 by 1000 matrix whose rows are the vectorized training images, and we perform the SVD in order to find the singular vectors.
+PCA relies on performing [singular value decomposition](http://en.wikipedia.org/wiki/Singular_value_decomposition) (abbreviated SVD) of the matrixized version of our training data (the so-called _principal components_ are those singular vectors corresponding to an arbitrary but fixed number of the largest singular values).
+We first represent each image as a high-dimensional row vector (2,746,800 dimensions, one dimension for each x-coordinate, y-coordinate, and color channell of each pixel).
+We form the 2,746,800 by 10,000 matrix whose rows are the vectorized training images, and we perform the SVD in order to find the singular vectors.
 These singular vectors, when translated by the average of our training images, span the best-fit hyperplane to our training images.
-We may then measure the unusualness of an image by calculating it's euclidean distance to the best-fit hyperplane.
+We may then measure the unusualuality of an image by calculating it's euclidean distance to the best-fit hyperplane.
 
 ![principal component analysis](https://raw.githubusercontent.com/IsToomersCornerBeingRolledRightNow/theScriptAndImagesForOurProjectVideo/master/13.png)
 
@@ -145,46 +145,18 @@ We quickly determined that this method, as described, was inadequate, particular
 
 Our solution was twofold:
 
-* We decided to chop each 1280x720 image into 144 80x80 sectors, train each sector separately, and then analyze live images on a sector-by-sector basis, aggregating the scores via square sum into one composite score.
+* We decided to chop each 1280x720 image into 144 smaller 80 by 80 sectors, train each sector separately, and then analyze live images on a sector-by-sector basis, aggregating the scores via square sum into one composite score.
 
-* We still found it necessary to reduce the resolution from 80x80 to 20x20, losing information in the process but allowing us to proceed.
+* We still found it necessary to reduce the resolution from 80 by 80 to 20 by 20, losing information in the process but allowing us to proceed.
 
-Now, instead of performing one SVD on a single 1280*720*3 by 10000 matrix, we perform SVD on 144 separate 20*20*3 by 10000 matrices, finding the least-fit hyperplane for each of the 144 sector.
-
-Training our image processor is computationally expensive and requires ample data representing usual images.
-Once our processor is trained, however, we use the results of the training to quickly score live images, where higher scores mean the image is more unusual.
-
-#### Training Process
-
-1. Training images are cut into 144 80 by 80 sectors and stored to disk by `preconvert.hs` via `preconvert.sh`.
-
-2. SVD is applied in each sector, generating the best-fit hyperplane, which is saved as a text file in the same directory, by `train.hs` via `train.sh`.
-
-3. Some sectors might be more variable than other sectors (_eg,_ sky sectors vs road sectors). To correct for this possibility, we apply the image processor to the training data, to measure the tendency for the training data to fall outside of the best-fit hyperplane. This step is handled by `genstats.hs` via `genstat.sh`, and the average distance for each sector is stored in `avgdist.txt` in the corresponding directory. At this stage, training is complete.
-
-4. `extract.sh` copies the training data into a format that the deployment image processor expects.
-
-The entire training process took about 8 hours of computation on my AMD-64 machine running Ubuntu 14.04 with 8 GB of RAM.
-
-#### Deployment Environment
-
-The deployment image processor reads the training data (we ended up having about 211 MB) and calculated the square-sum aggregate score of the distances of each sector to that sectors hyperplane.
-
-Scoring an individual image takes between 1.5 and 3 minutes per image on my machine. Much of this is filesystem overhead associated to reading the training data, and in a refined implementation would be eliminated by holding the training data in RAM continually.
-=======
-
-* We decided to chop each 1280x720 image into 144 80x80 sectors, train each sector separately, and then analyze live images on a sector-by-sector basis, aggregating the scores via square sum into one composite score.
-
-* We still found it necessary to reduce the resolution from 80x80 to 20x20, losing information in the process but allowing us to proceed.
-
-Now, instead of performing one SVD on a single 1280*720*3 by 10000 matrix, we perform SVD on 144 separate 20*20*3 by 10000 matrices, finding the least-fit hyperplane for each of the 144 sector.
+Now, instead of performing one SVD on a single 2,746,800 by 10,000 matrix, we perform SVD on 144 separate 1,000 by 10,000 matrices, finding the best-fit hyperplane for each of the 144 sectors.
 
 Training our image processor is computationally expensive and requires ample data representing usual images.
 Once our processor is trained, however, we use the results of the training to quickly score live images, where higher scores mean the image is more unusual.
 
 #### Training Process
 
-1. Training images are cut into 144 80 by 80 sectors and stored to disk by `preconvert.hs` via `preconvert.sh`.
+1. Training images are cut into 144 smaller 80 by 80 sectors and stored to disk by `preconvert.hs` via `preconvert.sh`.
 
 2. SVD is applied in each sector, generating the best-fit hyperplane, which is saved as a text file in the same directory, by `train.hs` via `train.sh`.
 
