@@ -6,7 +6,7 @@ A [#SmartCityHack](http://www.global.datafest.net/) project rolled by
 [Steven](http://github.com/StevenClontz),
 and [Zack!](http://github.com/ZSarver)
 
-Abstract: using a [live feed][5] provided by the City of Auburn,
+Abstract: using a live feed provided by the City of Auburn,
 we can programmatically determine if Auburn Tigers fans have begun
 [rolling Toomer's Corner](https://github.com/IsToomersCornerBeingRolledRightNow/istoomerscornerbeingrolledrightnow.github.io) by analyzing images via Canny edge detection and analysis of gradient vectors.
 These techniques rely on very particular geometric properties of the phenomenon we are trying to detect.
@@ -25,6 +25,7 @@ However, the limits of such an algorithm are apparent as soon as one seeks to ge
 In essence, we lucked out, simply because because of gravity, and Canny-gradient detection takes advantage of that position.
 
 It became clear to us that if we wanted an image-detection algorithm that was useful outside of Auburn, we'd need something more general.
+
 Our solution: we will train our algorithm to spot those differences through statistical analysis of a large set of usual images.
 
 Using these methods, we hope to be able to detect arbitrary unusual images, which may then be flagged for analysis by a secondary image processor or for human intervention/action.
@@ -68,7 +69,7 @@ BASH script.
 
 We're passed (1) a directory that contains sample data and the results
 of the training process and (2) the directory in which we want to
-save only the results. This script will extract the results of training and place them in a seperate directory, preserving subdirectory structure.
+save only the results. This script will extract the results of training and place them in a separate directory, preserving subdirectory structure.
 
 #### genstats.hs
 
@@ -84,7 +85,7 @@ This completes analysis of the training data.
 
 #### genstats.sh
 
-BASH script wraper for `genstats.hs`
+BASH script wrapper for `genstats.hs`
 
 We're passed the path of the directory containing chopped images and 
 hyperplanes. This script runs genstats on each of the 144 subdirectories,
@@ -141,9 +142,35 @@ We may then measure the unusualality of an image by calculating it's euclidean d
 
 We quickly determined that this method, as described, was inadequate, particularly when the kernel complained about not having 6TB of RAM to allocate and terminated our training program before completion.
 
-Our solution was twofold.
+Our solution was twofold:
 
-1. We decided to chop each 1280x720 image into 144 smaller 80x80 sectors, train and analyze each sector separately 
+* We decided to chop each 1280x720 image into 144 80x80 sectors, train each sector separately, and then analyze live images on a sector-by-sector basis, aggregating the scores via square sum into one composite score.
+
+* We still found it necessary to reduce the resolution from 80x80 to 20x20, losing information in the process but allowing us to proceed.
+
+Now, instead of performing one SVD on a single 1280*720*3 by 10000 matrix, we perform SVD on 144 separate 20*20*3 by 10000 matrices, finding the least-fit hyperplane for each of the 144 sector.
+
+Training our image processor is computationally expensive and requires ample data representing usual images.
+Once our processor is trained, however, we use the results of the training to quickly score live images, where higher scores mean the image is more unusual.
+
+#### Training Process
+
+1. Training images are cut into 144 80 by 80 sectors and stored to disk by `preconvert.hs` via `preconvert.sh`.
+
+2. SVD is applied in each sector, generating the best-fit hyperplane, which is saved as a text file in the same directory, by `train.hs` via `train.sh`.
+
+3. Some sectors might be more variable than other sectors (_eg,_ sky sectors vs road sectors). To correct for this possibility, we apply the image processor to the training data, to measure the tendency for the training data to fall outside of the best-fit hyperplane. This step is handled by `genstats.hs` via `genstat.sh`, and the average distance for each sector is stored in `avgdist.txt` in the corresponding directory. At this stage, training is complete.
+
+4. `extract.sh` copies the training data into a format that the deployment image processor expects.
+
+The entire training process took about 8 hours of computation on my AMD-64 machine running Ubuntu 14.04 with 8 GB of RAM.
+
+#### Deployment Environment
+
+The deployment image processor reads the training data (we ended up having about 211 MB) and calculated the square-sum aggregate score of the distances of each sector to that sectors hyperplane.
+
+Scoring an individual image takes between 1.5 and 3 minutes per image on my machine. Much of this is filesystem overhead associated to reading the training data, and in a refined implementation would be eliminated by holding the training data in RAM continually.
+>>>>>>> wrote the Method section.
 
 ## Results
 
