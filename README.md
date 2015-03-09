@@ -174,4 +174,116 @@ Scoring an individual image takes between 1.5 and 3 minutes per image on my mach
 
 ## Results
 
+We ran our trained image analyzer on archival images of Toomer's corner under various amounts of toilet paper, as well as on several silly images.
+
+In order to ballpark a baseline score, we first ran the image analyzer on 20 unrolled images. The images and their scores can be found in our [sample-data](https://github.com/IsToomersCornerBeingRolledRightNow/sample-data) repository, but here are the scores for the convenience of the reader:
+
+> pca-unrolled-from-archive.txt
+> -----------------------------
+> img: 2015-02-21_11-28-42.jpg 	 score: 1942.333056456192
+> img: 2015-02-21_11-28-43.jpg 	 score: 1461.0635427474256
+> img: 2015-02-21_11-28-44.jpg 	 score: 1212.8302947918517
+> img: 2015-02-21_11-28-45.jpg 	 score: 1237.291162568768
+> img: 2015-02-21_11-28-46.jpg 	 score: 929.3443587938181
+> img: 2015-02-21_11-28-47.jpg 	 score: 1033.5302920375207
+> img: 2015-02-21_11-28-48.jpg 	 score: 910.4956889919005
+> img: 2015-02-21_11-28-49.jpg 	 score: 1214.7154974935213
+> img: 2015-02-21_11-28-50.jpg 	 score: 1241.1939105821282
+> img: 2015-02-21_11-28-51.jpg 	 score: 1556.7247118298226
+> img: 2015-02-21_11-28-52.jpg 	 score: 1955.210662398523
+> img: 2015-02-21_11-28-53.jpg 	 score: 1990.1815251259202
+> img: 2015-02-21_14-03-33.jpg 	 score: 633.9996327567347
+> img: 2015-02-21_14-03-34.jpg 	 score: 612.1522207034938
+> img: 2015-02-21_14-03-35.jpg 	 score: 547.5671276398446
+> img: 2015-02-21_14-03-37.jpg 	 score: 517.4147807336952
+> img: 2015-02-21_14-03-38.jpg 	 score: 532.8497394798661
+> img: 2015-02-21_14-03-40.jpg 	 score: 579.2520644414814
+> img: 2015-02-21_14-03-41.jpg 	 score: 475.75492042371064
+> img: 2015-02-21_14-03-42.jpg 	 score: 466.4007149599398
+
+Recall that a higher score indicates (presumably) a more unusual image.
+The scores range from 466 to 1990.
+The average score is 1052, with a standard deviation of 520.
+
+![lowest scoring unrolled image](https://raw.githubusercontent.com/IsToomersCornerBeingRolledRightNow/sample-data/master/unrolled-from-archive/2015-02-21_14-03-42.jpg)
+
+![average scoring unrolled image](https://raw.githubusercontent.com/IsToomersCornerBeingRolledRightNow/sample-data/master/unrolled-from-archive/2015-02-21_11-28-47.jpg)
+
+![highest scoring unrolled image](https://github.com/IsToomersCornerBeingRolledRightNow/sample-data/blob/master/unrolled-from-archive/2015-02-21_11-28-53.jpg)
+
+Next we applied the trained image analyzer to archival images of the corner in a rolled state.
+
+> pca-rolled-from-archive.txt
+> ---------------------------
+> img: 2015-02-21_11-05-28.jpg 	 score: 1114.937424911573
+> img: 2015-02-21_11-05-29.jpg 	 score: 1883.2568935238596
+> img: 2015-02-21_11-05-30.jpg 	 score: 2565.4953370713756
+> img: 2015-02-21_11-05-31.jpg 	 score: 3149.014080638789
+> img: 2015-02-21_11-05-32.jpg 	 score: 3176.393056241723
+> img: 2015-02-21_11-05-33.jpg 	 score: 2729.9825766400454
+> img: 2015-02-21_11-05-34.jpg 	 score: 3217.4583899413115
+> img: 2015-02-21_11-05-35.jpg 	 score: 2717.291894576775
+> img: 2015-02-21_11-05-36.jpg 	 score: 3220.3516950300573
+> img: 2015-02-21_11-05-37.jpg 	 score: 3104.428909807628
+> img: 2015-02-21_11-05-38.jpg 	 score: 3008.448707765287
+> img: 2015-02-21_11-05-39.jpg 	 score: 2930.590774095586
+> img: 2015-02-21_11-05-40.jpg 	 score: 3074.7927182318617
+> img: 2015-02-21_11-05-41.jpg 	 score: 3142.80122502018
+> img: 2015-02-21_11-05-42.jpg 	 score: 2633.399959459505
+> img: 2015-02-21_11-05-43.jpg 	 score: 1886.859147965476
+> img: 2015-02-21_11-05-44.jpg 	 score: 1652.3006235699575
+> img: 2015-02-21_11-05-45.jpg 	 score: 1695.3782454751806
+> img: 2015-02-21_11-05-46.jpg 	 score: 1277.046866929809
+> img: 2015-02-21_11-05-47.jpg 	 score: 1257.333667962419
+> img: 2015-02-21_11-27-02.jpg 	 score: 1888.5827181736904
+> img: 2015-02-21_11-27-03.jpg 	 score: 1811.4594379933799
+> img: 2015-02-21_11-27-04.jpg 	 score: 1444.3221269226963
+> img: 2015-02-21_11-27-05.jpg 	 score: 1618.7795752141603
+> img: 2015-02-21_11-27-06.jpg 	 score: 2012.79366290431
+> img: 2015-02-21_11-27-07.jpg 	 score: 1976.7977733376913
+> img: 2015-02-21_11-27-08.jpg 	 score: 2052.8985671872374
+> img: 2015-02-21_11-27-09.jpg 	 score: 2765.798453929485
+> img: 2015-02-21_11-27-10.jpg 	 score: 2259.6502811705973
+> img: 2015-02-21_11-27-11.jpg 	 score: 2446.266801980547
+> img: 2015-02-21_11-27-12.jpg 	 score: 2752.0940631728427
+> img: 2015-02-21_11-27-13.jpg 	 score: 2582.8439573245505
+> img: 2015-02-21_11-27-14.jpg 	 score: 2016.8654166552508
+> img: 2015-02-21_11-27-15.jpg 	 score: 1847.0678359339888
+> img: 2015-02-21_11-27-16.jpg 	 score: 1262.4819653042787
+> img: 2015-02-21_11-27-17.jpg 	 score: 1324.0551850898114
+> img: 2015-02-21_11-28-33.jpg 	 score: 1051.7191761887595
+> img: 2015-02-21_11-28-34.jpg 	 score: 1797.009819497115
+> img: 2015-02-21_11-28-35.jpg 	 score: 1813.9605223921967
+> img: 2015-02-21_11-28-36.jpg 	 score: 3039.579335248384
+> img: 2015-02-21_11-28-37.jpg 	 score: 2713.2471702500943
+> img: 2015-02-21_11-28-38.jpg 	 score: 2118.547098323372
+> img: 2015-02-21_11-28-39.jpg 	 score: 1784.952348517634
+> img: 2015-02-21_11-28-40.jpg 	 score: 1344.291369478608
+> img: 2015-02-21_11-28-41.jpg 	 score: 1397.4266536226673
+> img: 2015-02-21_11-28-54.jpg 	 score: 1375.4927016186023
+> img: 2015-02-21_11-28-55.jpg 	 score: 1859.5455368023918
+> img: 2015-02-21_11-28-56.jpg 	 score: 2129.247432745011
+> img: 2015-02-21_11-28-57.jpg 	 score: 2077.3774710946036
+> img: 2015-02-21_11-28-58.jpg 	 score: 2278.4474327405037
+> img: 2015-02-21_11-28-59.jpg 	 score: 2735.869280054003
+> img: 2015-02-21_11-29-00.jpg 	 score: 1361.9771306435246
+
+The scores for rolled images range from 1051 to 3220,
+with average score 2161 and standard deviation of 655.
+
+![lowest scoring rolled image](https://github.com/IsToomersCornerBeingRolledRightNow/sample-data/blob/master/rolled-from-archive/2015-02-21_11-28-33.jpg)
+
+![average scoring rolled image](https://github.com/IsToomersCornerBeingRolledRightNow/sample-data/blob/master/rolled-from-archive/2015-02-21_11-28-56.jpg)
+
+![highest scoring rolled image](https://github.com/IsToomersCornerBeingRolledRightNow/sample-data/blob/master/rolled-from-archive/2015-02-21_11-05-36.jpg)
+
+Next we tested the generality of our image analyzer by scoring several _highly unusual_ images representative of road closure due to dinosaur attack.
+
+![Dinosaur attack](https://raw.githubusercontent.com/IsToomersCornerBeingRolledRightNow/sample-data/master/silly-images/15.jpg)
+
+Dinosaur Comics' T-Rex and Toy Story's Rex scored a very respectable 2837, not too shabby!
+
+![Police barricade](https://raw.githubusercontent.com/IsToomersCornerBeingRolledRightNow/sample-data/master/silly-images/16.jpg)
+
+The police barricade scored a whopping 5219.
 
