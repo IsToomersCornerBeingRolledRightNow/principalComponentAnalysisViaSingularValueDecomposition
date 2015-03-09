@@ -211,21 +211,21 @@ The police barricade scored a whopping 5219.
 
 ## Summary of Files
 
-#### ImageToVector.hs
+#### `ImageToVector.hs`
 
 Haskell source code.
 Compiles to a library.
 
 This library contains utility functions for loading, converting, and manipulating images.
 
-#### PCA.hs
+#### `PCA.hs`
 
 Haskell source code.
 Compiles to library.
 
 This library contains the functions needed to perform principal component analysis on vectorized data.
 
-#### compare.hs
+#### `compare.hs`
 
 Haskell source code.
 Compiles to an executable.
@@ -239,7 +239,7 @@ training data's average distance to the same hyperplane.
 Returns, to `stdout`, the square sum of the scores described above.
 Higher number means the image is more unusual.
 
-#### extract.hs
+#### `extract.hs`
 
 BASH script.
 
@@ -247,7 +247,7 @@ We're passed (1) a directory that contains sample data and the results
 of the training process and (2) the directory in which we want to
 save only the results. This script will extract the results of training and place them in a separate directory, preserving subdirectory structure.
 
-#### genstats.hs
+#### `genstats.hs`
 
 Haskell source code.
 Compiles to executable.
@@ -259,7 +259,7 @@ We compare each image to the hyperplane, take the mean distance,
 and save that in a text file, called `avgdist.txt`, in the same directory.
 This completes analysis of the training data.
 
-#### genstats.sh
+#### `genstats.sh`
 
 BASH script wrapper for `genstats.hs`
 
@@ -267,7 +267,7 @@ We're passed the path of the directory containing chopped images and
 hyperplanes. This script runs genstats on each of the 144 subdirectories,
 so that each directory should end up containing `avgdist.txt`.
 
-#### preconvert.hs
+#### `preconvert.hs`
 
 Haskell source code.
 Compiles to executable.
@@ -277,7 +277,7 @@ We're passed the path to an image. We expect that image to be 1280 by
 pieces with the same file name as the original but in numbered
 subdirectories, `chopped/1`, `chopped/2`, etc.
 
-#### preconvert.sh
+#### `preconvert.sh`
 
 BASH script wrapper for `preconvert.hs`
 
@@ -285,7 +285,7 @@ We're passed a directory that contains thousands of images. This
 script runs preconvert on each image. Results should be 144 subdirectories
 `chopped/1`, `chopped/2`, etc., each of which should contains thousands of tiny images.
 
-#### train.hs
+#### `train.hs`
 
 Haskell source code.
 Compiles to executable.
