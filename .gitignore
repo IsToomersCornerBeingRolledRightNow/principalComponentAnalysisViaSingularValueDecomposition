@@ -13,6 +13,4 @@ cabal.config
 # Added by Daniel
 *~
 *.save0
-sample-data*
 pca
-
