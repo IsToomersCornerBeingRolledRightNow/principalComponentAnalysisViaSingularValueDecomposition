@@ -69,15 +69,15 @@ Recall that a higher score indicates (presumably) a more unusual image.
 The scores range from 466 to 1990.
 The average score is 1052, with a standard deviation of 520.
 
-![lowest scoring unrolled image](https://raw.githubusercontent.com/IsToomersCornerBeingRolledRightNow/sample-data/master/unrolled-from-archive/2015-02-21_14-03-42.jpg)
+![lowest scoring unrolled image](sample-data/unrolled-from-archive/2015-02-21_14-03-42.jpg)
 
 Lowest-scoring unrolled image, at 466.
 
-![average scoring unrolled image](https://raw.githubusercontent.com/IsToomersCornerBeingRolledRightNow/sample-data/master/unrolled-from-archive/2015-02-21_11-28-47.jpg)
+![average scoring unrolled image](sample-data/unrolled-from-archive/2015-02-21_11-28-47.jpg)
 
 Average-scoring unrolled image, at 1052.
 
-![highest scoring unrolled image](https://github.com/IsToomersCornerBeingRolledRightNow/sample-data/blob/master/unrolled-from-archive/2015-02-21_11-28-53.jpg)
+![highest scoring unrolled image](sample-data/unrolled-from-archive/2015-02-21_11-28-53.jpg)
 
 Highest-scoring unrolled image, at 1990.
 
@@ -143,25 +143,25 @@ Next we applied the trained image analyzer to archival images of the corner in a
 The scores for rolled images range from 1051 to 3220,
 with average score 2161 and standard deviation of 655.
 
-![lowest scoring rolled image](https://github.com/IsToomersCornerBeingRolledRightNow/sample-data/blob/master/rolled-from-archive/2015-02-21_11-28-33.jpg)
+![lowest scoring rolled image](sample-data/rolled-from-archive/2015-02-21_11-28-33.jpg)
 
 Lowest-scoring rolled image, at 1051.
 
-![average scoring rolled image](https://github.com/IsToomersCornerBeingRolledRightNow/sample-data/blob/master/rolled-from-archive/2015-02-21_11-28-56.jpg)
+![average scoring rolled image](sample-data/rolled-from-archive/2015-02-21_11-28-56.jpg)
 
 Average-scoring rolled image, at 2161.
 
-![highest scoring rolled image](https://github.com/IsToomersCornerBeingRolledRightNow/sample-data/blob/master/rolled-from-archive/2015-02-21_11-05-36.jpg)
+![highest scoring rolled image](sample-data/rolled-from-archive/2015-02-21_11-05-36.jpg)
 
 Highest-scoring rolled image, at 3220.
 
 Next we tested the generality of our image analyzer by scoring several _highly unusual_ images representative of road closure due to dinosaur attack.
 
-![Dinosaur attack](https://raw.githubusercontent.com/IsToomersCornerBeingRolledRightNow/sample-data/master/silly-images/15.jpg)
+![Dinosaur attack](sample-data/silly-images/15.jpg)
 
 Dinosaur Comics' T-Rex and Toy Story's Rex scored a very respectable 2837, not too shabby!
 
-![Police barricade](https://raw.githubusercontent.com/IsToomersCornerBeingRolledRightNow/sample-data/master/silly-images/16.jpg)
+![Police barricade](sample-data/silly-images/16.jpg)
 
 The police barricade scored a whopping 5219.
 
@@ -270,7 +270,7 @@ This completes analysis of the training data.
 
 BASH script wrapper for `genstats.hs`
 
-We're passed the path of the directory containing chopped images and 
+We're passed the path of the directory containing chopped images and
 hyperplanes. This script runs genstats on each of the 144 subdirectories,
 so that each directory should end up containing `avgdist.txt`.
 
