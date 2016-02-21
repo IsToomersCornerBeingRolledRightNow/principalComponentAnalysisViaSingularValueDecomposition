@@ -31,8 +31,8 @@ Our solution: we will train our algorithm to spot those differences through stat
 
 Using these methods, we hope to be able to detect arbitrary unusual images, which may then be flagged for analysis by a secondary image processor or for human intervention/action.
 
-We use computationally-expensive [Principal Component Analysis](http://en.wikipedia.org/wiki/Principal_component_analysis) (abbreviated PCA) to generate training data representative of presumably usual images.
-We may then use computationally-cheap image analysis methods to compare a live image to the training data, and determine whether the live image is usual or unusual.
+We use computationally-expensive [Principal Component Analysis](http://en.wikipedia.org/wiki/Principal_component_analysis) (abbreviated PCA) to analyze training data representative of presumably usual images.
+We may then use computationally-cheap image analysis methods to compare a live image to the results from the training data, and determine whether the live image is usual or unusual.
 
 ## Results
 
