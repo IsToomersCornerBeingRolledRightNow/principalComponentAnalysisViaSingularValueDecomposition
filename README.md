@@ -22,7 +22,7 @@ Our live implementation of [Is Toomer's Corner Being Rolled Right Now](http://is
 
 The Canny-gradient algorithm reliably detects large numbers of near-vertical and vertical lines in an image, and thus provides a good guess at whether celebration is happening on the corner.
 However, the limits of such an algorithm are apparent as soon as one seeks to generalize to the detection of other phenomenon--it is not clear that the geometric properties of a _usual_ image will be significantly different from those of a _unusual_ image.
-In essence, we lucked out, simply because because of gravity, and Canny-gradient detection takes advantage of that position.
+In essence, we lucked out, simply because of gravity, and Canny-gradient detection takes advantage of that position.
 
 It became clear to us that if we wanted an image-detection algorithm that was actually anything like useful, we'd need something more general.
 Also, we cannot anticipate the geometric properties that will distinguish unusual images from usual images.
